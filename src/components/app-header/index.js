@@ -17,7 +17,6 @@ export default memo(function MYAppHeader() {
     if(! item.isNewPage){
       return (
       <NavLink to={item.link}
-               exact
                key={item.title}
                className="header-item">{item.title}</NavLink>
       )
