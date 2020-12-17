@@ -17,7 +17,24 @@ export const TopBannerWrapper = styled.div`
     margin: 0 auto;
     height: 100%;
   }
-
+  .slick-dots{
+    height: 6px;
+    li{
+      margin-left: 2px;
+      margin-right: 2px;
+      button{
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
+      &.slick-active {
+        width: 16px;
+        button {
+          background-color: #A40011;
+        }
+      }
+    }
+  }
 `
 
 export const BannerLeft = styled.div`
