@@ -1,9 +1,15 @@
+//榜单
 import React, { memo } from 'react'
 
-export default memo(function MYArtistHotComptision() {
+import MYRecommendHeader from "@/components/recommend-header"
+
+import {
+  RecommendRankingWrapper
+} from './style'
+export default memo(function MYRecommendRank() {
   return (
-    <div>
-      
-    </div>
+    <RecommendRankingWrapper>
+      <MYRecommendHeader title="榜单" />
+    </RecommendRankingWrapper>
   )
 })

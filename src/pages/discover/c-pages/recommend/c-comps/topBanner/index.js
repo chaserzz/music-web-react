@@ -51,7 +51,7 @@ export default memo(function MYTopBanner() {
              topBanners && topBanners.map((item,index) =>{
                 return (
                   <div key={item.imageUrl}>
-                    <img src={item.imageUrl}/>
+                    <img alt={item.name} src={item.imageUrl}/>
                   </div>
                 )
               })
