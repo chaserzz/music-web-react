@@ -19,3 +19,13 @@ export const getHotRecommends = (limit) =>{
     }
   })
 }
+
+// 新碟上架数据获取
+export const getNewAlbum = (limit) => {
+  return request({
+    url:'/top/album',
+    params:{
+      limit
+    }
+  })
+}

@@ -19,6 +19,8 @@ export const RcmHeaderLeft = styled.div`
   display: flex;
   .hot-title {
     display: flex;
+    font-size: 20px;
+    line-height: 28px;
     margin-bottom: 5px;
     a {
       color: #333333;

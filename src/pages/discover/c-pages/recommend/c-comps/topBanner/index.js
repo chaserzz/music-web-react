@@ -21,6 +21,7 @@ export default memo(function MYTopBanner() {
   const { topBanners } = useSelector(state => ({
     topBanners: state.getIn(["recommend","topBanners"])
   }),shallowEqual/** 使得useSelector进行浅层比较,而不是引用比较 */ )
+  
   //利用react-redux提供的Hook直接返回dispatch这个对象
   const dispatch = useDispatch()    
   
