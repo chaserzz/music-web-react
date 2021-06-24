@@ -12,7 +12,6 @@ export const SongCoverWrapper = styled.div`
       position: relative;
       width: 100%;
       cursor: pointer;
-      z-index: 9;
     }
 
     .cover-mask {

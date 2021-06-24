@@ -8,7 +8,7 @@ import store from "./store"
 
 import MYAppHeader from "@/components/app-header"
 import MYAppFooter from "@/components/app-footer"
-
+import MYAppPlayerBar from "./pages/player/app-player-bar"
 export default memo(function App() {
   return (
     <Provider store={store}>
@@ -16,6 +16,7 @@ export default memo(function App() {
         <MYAppHeader />
           {renderRoutes(routes)}
         <MYAppFooter />
+        <MYAppPlayerBar />
       </HashRouter>
     </Provider>
   )
