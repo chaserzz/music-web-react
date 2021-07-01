@@ -163,6 +163,7 @@ export const Operator = styled.div`
 
     .loop {
       background-position: ${props => {
+        //这里props需要通过Operator传入
         switch(props.sequence) {
           case 1:
             return "-66px -248px";
@@ -175,6 +176,7 @@ export const Operator = styled.div`
     }
 
     .playlist {
+      float: right;
       padding-left: 18px;
       text-align: center;
       color: #ccc;

@@ -6,7 +6,6 @@ import MYRecommendHeader from "@/components/recommend-header"
 import MYRankList from "@/components/rank-list"
 
 import { getTopListAction } from '../../store/actionCreator'
-
 import {
   RecommendRankingWrapper
 } from './style'

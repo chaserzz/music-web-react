@@ -12,6 +12,7 @@ import MYRanking from "@/pages/discover/c-pages/ranking"
 import MYMine from "@/pages/mine"
 import MYFriends from "@/pages/friends"
 import MYDownLoad from "@/pages/download"
+import MYPlayer from "../pages/player/MYPlayer"
 
 const routes = [
   {
@@ -49,6 +50,9 @@ const routes = [
       },{
         path:"/discover/artist",
         component:MYArtist
+      },{
+        path:"/discover/player",
+        component: MYPlayer
       }
     ]
   },

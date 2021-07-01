@@ -1,4 +1,6 @@
 import React, { memo } from 'react'
+import { useDispatch } from "react-redux"
+import { getSongDetailAction } from "@/pages/player/store"
 
 import { getSizeImage } from '@/utils/format-utils.js'
 
@@ -6,10 +8,14 @@ import { RankingListWrapper } from './style'
 
 export default memo(function MYRankList(props) {
   //props
-  const { info } = props
-  const { tracks = [] } = info
+  const { info } = props;
+  const { tracks = [] } = info;
 
-  
+  //redux hook
+  const dispatch = useDispatch()
+  const handlePlayButtonClick = (song) => {
+    dispatch(getSongDetailAction(song.id))
+  }  
   return (
     <RankingListWrapper>
       <div className="ranking-header">
@@ -44,23 +50,9 @@ export default memo(function MYRankList(props) {
                     {item.name}
                   </a>
                 <div className="oper">
-                  <a
-                    href="/discover/recommend"
-                    className="sprite_02 btn play"
-                    
-                  >
-                    {item.name}
-                  </a>
-                  <a
-                    href="/discover/recommend"
-                    className="sprite_icon2 btn addto"
-                    
-                  >
-                    {item.name}
-                  </a>
-                  <a href="/play" className="no-link sprite_02 btn favourite">
-                    {item.name}
-                  </a>
+                  <button className="sprite_02 btn play" onClick={e => handlePlayButtonClick(item)}></button>
+                  <button className="sprite_icon2 btn addto"></button>
+                  <button className="no-link sprite_02 btn favourite"></button>
                 </div>
               </div>
             )
