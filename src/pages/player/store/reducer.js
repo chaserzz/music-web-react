@@ -4,7 +4,9 @@ const defaultState = Map({
   playList:[],  //播放列表
   currentSongId: 0,  //当前播放的歌曲的索引值
   currentSong: {},  //当前播放歌曲的信息
-  playSequenceType: 0 //0: 顺序 1随机 2单曲
+  playSequenceType: 0, //0: 顺序 1随机 2单曲
+  lyricMap: {},  //播放歌曲的Map
+  lyricList: []
 })
 
 export default function reducer(state = defaultState, action){
@@ -20,6 +22,12 @@ export default function reducer(state = defaultState, action){
     }
     case actionType.CHANGE_PLAY_SEQUENCE_TYPE: {
       return state.set("playSequenceType",action.playSequenceType)
+    }
+    case actionType.CHANGE_LYRIC_MAP: {
+      return state.set("lyricMap",action.lyricMap)
+    }
+    case actionType.CHANGE_LYRIC_LIST: {
+      return state.set("lyricList",action.lyricList)
     }
     default:
       return state

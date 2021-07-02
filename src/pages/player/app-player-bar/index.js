@@ -19,10 +19,11 @@ export default memo(function AppPlayBar() {
   //redux hook
    const dispatch = useDispatch()
    //获得需要播放的歌曲的信息
-   const { currentSong, playSequenceType, playList } = useSelector(state => ({
+   const { currentSong, playSequenceType, playList, lyricList } = useSelector(state => ({
      currentSong: state.getIn(["player","currentSong"]),
      playSequenceType: state.getIn(['player','playSequenceType']),  //0: 顺序 1随机 2单曲
-     playList: state.getIn(['player','playList'])
+     playList: state.getIn(['player','playList']),
+     lyricList: state.getIn(['player','lyricList'])
    }),shallowEqual)
   //other hooks
   //获得audio元素对象
@@ -105,13 +106,22 @@ export default memo(function AppPlayBar() {
 
   // audio播放时修改当前时间
   const handleTimeUpdate = (e) => {
-    console.log("currentTime",e.target.currentTime)
     //如果正在修改歌曲的进度，则当前时间和进度不再跟随audio中的时间
     if(isSliderChangeFlag){
       return;
     }
-    setCurrentTime(e.target.currentTime * 1000);
+    let AudioCurrentTime = e.target.currentTime * 1000 ;
+    setCurrentTime(AudioCurrentTime);
     setProgress(currentTime / totalTime * 100);
+    let currentLyricIndex = 0;
+    for(let i = 0; i < lyricList.length; i++){
+      const lyricItem = lyricList[i]
+      if(AudioCurrentTime < lyricItem.time){
+        currentLyricIndex = i
+        break;
+      }
+    }
+    console.log(lyricList[currentLyricIndex - 1])
   }
 
   /**

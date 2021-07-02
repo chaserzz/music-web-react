@@ -1,7 +1,7 @@
-import { getSongDetail } from '@/service/player'
+import { getSongDetail, getLyric } from '@/service/player'
 import * as actionType from "./constants"
 import { getRandomNubmer } from "@/utils/math.utils"
-
+import { parseLyric } from "@/utils/parse-lyric"
 //同步action
 
 //修改播放的歌曲的下标
@@ -67,6 +67,17 @@ export const changeCurrentPlaySequenceAction = (playSequenceType) => ({
   playSequenceType
 }) 
 
+// 保存当前播放的歌词的Map
+export const changeLyricMapAction = (lyricMap) => ({
+  type: actionType.CHANGE_LYRIC_MAP,
+  lyricMap
+})
+// 保存当前播放的歌词的数组
+export const changeLyricListAction = (lyricList) => ({
+  type: actionType.CHANGE_LYRIC_LIST,
+  lyricList
+})
+
 //异步action
 //获得歌曲详情
 export const getSongDetailAction = (ids) => {
@@ -74,10 +85,11 @@ export const getSongDetailAction = (ids) => {
     const playList = getState().getIn(["player","playList"]);
     const songIndex = playList.findIndex(song => song.id === ids);  //获得对应歌曲在playList中的下标， 不存在获得的是-1
     //搜索playList中是否存在该歌曲
+    let song = null
     if(songIndex === -1){
       //该歌曲不存在playList中
       getSongDetail(ids).then(res => {
-        const song = res.songs && res.songs[0];
+        song = res.songs && res.songs[0];
         //修改currentSong
         if( !song ){
           return;
@@ -88,13 +100,30 @@ export const getSongDetailAction = (ids) => {
         dispatch(changePlayListAction(newPlayList));
         //修改当前播放歌曲的下标
         dispatch(changeCurrentSongIdAction(newPlayList.length - 1));
-
+        //获得歌词
+        dispatch(getLyricAction(song.id));
       })
     }else{
       // 该歌曲在playList中
       dispatch(changeCurrentSongAction(playList[songIndex]));
       dispatch(changeCurrentSongIdAction(songIndex));
+      if(!song){
+        return;
+      }
+      //获得歌词
+      dispatch(getLyricAction(song.id));
     }
+  }
+}
 
+export const getLyricAction = (id) => {
+  return dispatch => {
+    console.log("object")
+    getLyric(id).then(res => {
+      const lyric = res.lrc.lyric;
+      const {lyricList, lyricMap } = parseLyric(lyric);
+      dispatch(changeLyricMapAction(lyricMap));
+      dispatch(changeLyricListAction(lyricList));
+    })
   }
 }
