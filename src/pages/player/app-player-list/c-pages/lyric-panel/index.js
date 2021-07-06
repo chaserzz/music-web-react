@@ -21,10 +21,6 @@ export default memo(function LyricPanel() {
     scrollTo(panelRef.current,(currentLyricIndex - 3) * 32, 320 );
   },[currentLyricIndex])
 
-  useEffect(() => {
-    panelRef.current.scrollTop = 999
-  },[])
-
   return (
     <PannelWrapper ref={panelRef}>
       <div className="lrc-content" >

@@ -16,7 +16,7 @@ export default memo(function AppPlayBar() {
   const [progress, setProgress ] = useState(0) //进度条的进度
   const [isSliderChangeFlag , setIsSliderChangeFlag] = useState(false)  //用来判断是否在更改歌曲的进度
   const [isPlaying,setIsPlaying] = useState(false) //歌曲是否正在播放
-
+  const [showPlayList,setShowPlayList] = useState(false) //歌曲控制板是否展示
   //redux hook
    const dispatch = useDispatch()
    //获得需要播放的歌曲的信息
@@ -148,6 +148,11 @@ export default memo(function AppPlayBar() {
     setIsSliderChangeFlag(false); //将sliderChangeFalg设置为false，使得进度和当前时间继续跟随audio标签的时间
   },[totalTime,isPlaying])
 
+
+  // 处理单击播放列表展示或者隐藏playlist
+  const handlePlayListBtnClick = e => {
+    setShowPlayList(!showPlayList)
+  }
   return (
     <PlayBarWrapper className="sprite_player">
        <div className="w980 content">
@@ -197,12 +202,12 @@ export default memo(function AppPlayBar() {
           <div className="right sprite_player">
             <button className="sprite_player btn volume"></button>
             <button className="sprite_player btn loop" onClick={handleSequenceChange}></button>
-            <button className="sprite_player btn playlist" >{playList.length}</button>
+            <button className="sprite_player btn playlist" onClick={handlePlayListBtnClick} >{playList.length}</button>
           </div>
         </Operator>
        </div>
        <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handlePlayEnded} />
-       <AppPlayerList />
+      {showPlayList && <AppPlayerList />}
     </PlayBarWrapper>
   )
 })
