@@ -192,7 +192,11 @@ button {
   background: url(../img/playbar_sprite.png) no-repeat 0 9999px;
 }
 
-.lyric-css .ant-message-notice-content {
+.sprite_playlist {
+  background: url(../img/playlist_sprite.png) no-repeat 0 9999px;
+}
+
+.lyric-css .ant-message-notice-content { 
   position: fixed;
   left: 50%;
   bottom: 50px;

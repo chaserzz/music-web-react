@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React, { memo, Suspense } from 'react'
 import { renderRoutes } from "react-router-config"
 import { HashRouter } from 'react-router-dom'
 import { Provider } from  "react-redux"
@@ -10,11 +10,13 @@ import MYAppHeader from "@/components/app-header"
 import MYAppFooter from "@/components/app-footer"
 import MYAppPlayerBar from "./pages/player/app-player-bar"
 export default memo(function App() {
-  return (
+  return (  
     <Provider store={store}>
       <HashRouter>
         <MYAppHeader />
-          {renderRoutes(routes)}
+          <Suspense fallback={<div>Loading...</div>}>
+            {renderRoutes(routes)}
+          </Suspense>
         <MYAppFooter />
         <MYAppPlayerBar />
       </HashRouter>

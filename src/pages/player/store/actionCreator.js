@@ -78,6 +78,14 @@ export const changeLyricListAction = (lyricList) => ({
   lyricList
 })
 
+// 当前播放的歌词
+export const changeCurrentLyricIndexAction = (currentLyricIndex) => {
+  return {
+    type: actionType.CHANGE_CURRENT_LYRIC_INDEX,
+    currentLyricIndex
+  }
+}
+
 //异步action
 //获得歌曲详情
 export const getSongDetailAction = (ids) => {

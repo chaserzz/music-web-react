@@ -1,11 +1,12 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 
-import { getSongDetailAction, changeCurrentPlaySequenceAction, changeCurrentSong } from "../store/actionCreator"
+import { getSongDetailAction, changeCurrentPlaySequenceAction, changeCurrentSong, changeCurrentLyricIndexAction } from "../store/actionCreator"
 
 import { NavLink } from 'react-router-dom'
 import { Slider } from 'antd'
 import { PlayBarWrapper, ControlWrapper, PlayInfo, Operator} from "./style"
+import AppPlayerList from "../app-player-list/"
 
 import { getSizeImage, formatDate, getPlaySong } from "@/utils/format-utils"
 
@@ -19,11 +20,12 @@ export default memo(function AppPlayBar() {
   //redux hook
    const dispatch = useDispatch()
    //获得需要播放的歌曲的信息
-   const { currentSong, playSequenceType, playList, lyricList } = useSelector(state => ({
+   const { currentSong, playSequenceType, playList, lyricList, currentLyricIndex } = useSelector(state => ({
      currentSong: state.getIn(["player","currentSong"]),
      playSequenceType: state.getIn(['player','playSequenceType']),  //0: 顺序 1随机 2单曲
      playList: state.getIn(['player','playList']),
-     lyricList: state.getIn(['player','lyricList'])
+     lyricList: state.getIn(['player','lyricList']),
+     currentLyricIndex: state.getIn(['player','currentLyricIndex'])
    }),shallowEqual)
   //other hooks
   //获得audio元素对象
@@ -113,15 +115,18 @@ export default memo(function AppPlayBar() {
     let AudioCurrentTime = e.target.currentTime * 1000 ;
     setCurrentTime(AudioCurrentTime);
     setProgress(currentTime / totalTime * 100);
-    let currentLyricIndex = 0;
-    for(let i = 0; i < lyricList.length; i++){
+    let i = 0;
+    for(; i < lyricList.length; i++){
       const lyricItem = lyricList[i]
       if(AudioCurrentTime < lyricItem.time){
-        currentLyricIndex = i
         break;
       }
     }
-    console.log(lyricList[currentLyricIndex - 1])
+    // 歌词下标没有改变，则不进行赋值
+    if(currentLyricIndex === (i - 1) ){
+      return
+    }
+    dispatch(changeCurrentLyricIndexAction(i - 1));
   }
 
   /**
@@ -197,6 +202,7 @@ export default memo(function AppPlayBar() {
         </Operator>
        </div>
        <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handlePlayEnded} />
+       <AppPlayerList />
     </PlayBarWrapper>
   )
 })

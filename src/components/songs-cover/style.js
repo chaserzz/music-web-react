@@ -20,7 +20,6 @@ export const SongCoverWrapper = styled.div`
       right: 0;
       top: 0;
       bottom: 0;
-      z-index:19;
       background-position: 0 0;
 
       .bottom-bar {
